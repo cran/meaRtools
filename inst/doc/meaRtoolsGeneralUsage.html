@@ -411,7 +411,7 @@ for (i in 1:length(s)) {
 <pre><code class="r">s[[i]]$ns_all$B5$en_brief
 </code></pre>
 
-<pre><code>##       spikes ns spikes.in.ns percent.of.spikes.in.ns mean.spikes.per.ns
+<pre><code>##       spikes ns spikes_in_ns percent_of_spikes_in_ns mean_spikes_per_ns
 ## B5_11     86  2            2                2.325581           1.000000
 ## B5_13    103  2            2                1.941748           1.000000
 ## B5_21     22  3            4               18.181818           1.333333
@@ -422,7 +422,7 @@ for (i in 1:length(s)) {
 ## B5_41     11  2            2               18.181818           1.000000
 ## B5_42     19  1            1                5.263158           1.000000
 ## B5_44     47  3            4                8.510638           1.333333
-##       sd.spikes.per.ns mean_insis
+##       sd_spikes_per_ns mean_insis
 ## B5_11        0.0000000   7.700000
 ## B5_13        0.0000000   0.720000
 ## B5_21        0.5773503   3.805000
@@ -710,12 +710,7 @@ write_features_to_files(s, nb_features, analysis$output_dir, &quot;nb&quot;)
 <p>The example recordings have three treatments (groups): treatX, treatY and untreated. to perform MW-tests, permutate the data and plot, we first need to decide which treatment we would like to compare to all the others. Here we use &#39;untreated&#39; as that treatment that will be tested against treatX and treatY. However, you can also use the get_wt(s) function and it will open a tcltk window with the treatments available on the plate and will let you choose the one you&#39;re interested in, to use as argument to the testing scheme.</p>
 
 <pre><code class="r">suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, spike_features, &quot;spikes&quot;, analysis$output_dir))
-</code></pre>
-
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_errorbar).
-</code></pre>
-
-<pre><code class="r">suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, burst_features, &quot;bursts&quot;, analysis$output_dir))
+suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, burst_features, &quot;bursts&quot;, analysis$output_dir))
 suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, ns_features, &quot;ns&quot;, analysis$output_dir))
 suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, nb_features, &quot;nb&quot;, analysis$output_dir))
 </code></pre>

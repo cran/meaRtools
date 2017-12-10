@@ -9,11 +9,11 @@ Authors@R: c(person("Quanli", "Wang", role = c("aut", "ctb")),
               person("Ellese", "Cotterill", role = c("aut", "ctb")),
               person("Tom", "Edinburgh", role = c("aut", "ctb")),
               person(c("Stephen", "J."), "Eglen", role = c("aut", "ctb", "ths"),email = "sje30@cam.ac.uk"))
-Version: 1.0.1
-Date: 2017-10-11
+Version: 1.0.2
+Date: 2017-12-05
 Description: Core algorithms for MEA spike train analysis, feature extraction, statistical analysis and plotting of multiple MEA recordings with multiple genotypes and treatments, published by Gelfman et al (2017) at <https://github.com/igm-team/meaRtools/>.
 Depends: R (>= 3.2.2)
-Imports: lattice,tcltk,emdist,ggplot2 (>= 2.0.0),
+Imports: lattice,tcltk,emdist,ggplot2 (>= 2.2.1),
         gridExtra,reshape2,plyr,gtools, Rcpp (>= 0.12.11)
 LinkingTo: Rcpp
 License: GPL (>= 3)
@@ -22,7 +22,7 @@ VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 Maintainer: Sahar Gelfman <sahar.gelfman@columbia.edu>
 NeedsCompilation: yes
-Packaged: 2017-10-11 14:44:41 UTC; sg3261
+Packaged: 2017-12-08 21:06:06 UTC; sg3261
 Author: Quanli Wang [aut, ctb],
   Sahar Gelfman [aut, ctb, cre],
   Diana Hall [aut, ctb],
@@ -32,4 +32,4 @@ Author: Quanli Wang [aut, ctb],
   Tom Edinburgh [aut, ctb],
   Stephen J. Eglen [aut, ctb, ths]
 Repository: CRAN
-Date/Publication: 2017-10-12 09:03:44 UTC
+Date/Publication: 2017-12-10 12:34:24 UTC

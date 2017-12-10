@@ -245,7 +245,7 @@ end = range[2]
 sttc(a, b, dt=0.01, rec_time = c(beg, end))
 </code></pre>
 
-<pre><code>## [1] 0.09780613
+<pre><code>## [1] 0.08786067
 </code></pre>
 
 <p>To compute all pairwise correlations we can put all the spikes into a
@@ -255,10 +255,10 @@ correlations; the leading diagonal should be 1.0 for autocorrelations.</p>
 <pre><code class="r">sttc_allspikes1(allspikes, 0.01, beg, end)
 </code></pre>
 
-<pre><code>##      [,1]       [,2]         [,3]
-## [1,]    1 0.09780613 -0.001437103
-## [2,]   NA 1.00000000 -0.006974534
-## [3,]   NA         NA  1.000000000
+<pre><code>##      [,1]       [,2]          [,3]
+## [1,]    1 0.08786067 -0.0093343478
+## [2,]   NA 1.00000000  0.0001219516
+## [3,]   NA         NA  1.0000000000
 </code></pre>
 
 <p>Since the STTC method was published, we have extended it to produce a
