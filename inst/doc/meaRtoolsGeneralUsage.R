@@ -23,23 +23,26 @@ experimental_log_file <- system.file("extdata","exampleRecording_1012016_plate1_
 
 ## ----set-dir-------------------------------------------------------------
 # The next command will get the directory of the csv files
-data_dir<-dirname(spk_list_files[1])
+data_dir<-tempdir()
+
+# creating output under the new temp directory
+print(paste0("Creating output folders under ",data_dir))
 
 # create the output directory as /Analysis under the data_dir
-output_dir<-paste0( data_dir , "/Analysis" ) 
-suppressWarnings(  dir.create(output_dir) )
+output_dir<-file.path( data_dir , "Analysis" ) 
+dir.create(output_dir)
 
 # create the output directory for single recording analysis 
-output_perDIV_dir<-paste0( data_dir , "/Analysis/outputPerDIV" ) 
-suppressWarnings(  dir.create(output_perDIV_dir) )
+output_perDIV_dir<-file.path( data_dir , "Analysis/outputPerDIV" ) 
+dir.create(output_perDIV_dir)
 
 # create the output directory for R objects of analyzed recordings 
-r_object_dir<-paste0( data_dir , "/Analysis/R_Objects" )
-suppressWarnings(  dir.create(r_object_dir) )
+r_object_dir<-file.path( data_dir , "Analysis/R_Objects" )
+dir.create(r_object_dir)
 
 # create the output directory for log files
-log.dir<-paste0( output_dir , "/LogFiles" ) 
-suppressWarnings(  dir.create(log.dir) )
+log.dir<-file.path( output_dir , "LogFiles" ) 
+dir.create(log.dir)
 
 # For organization sake, set a list object to hold all output directories 
 analysis<-list(spikeFiles = spk_list_files, output_dir = output_dir,
@@ -213,7 +216,7 @@ suppressMessages(permute_features_and_plot(s, "treatX", parameters$perm_n, nb_fe
 
 
 ## ----dist_perm-----------------------------------------------------------
-result <- suppressWarnings(dist_perm(paste0(dirname(spk_list_files[1]),"/Analysis/outputPerDIV/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv"),1000,"treatX","treatY"))
+result <- suppressWarnings(dist_perm(paste0(analysis$output_perDIV_dir,"/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv"),1000,"treatX","treatY"))
 
 plot(result$data_wt_original,col="blue",main=basename,type="l",lwd=3,xlab="IBI")
 points(result$data_ko_original,col="green",type="l",lwd=3)
@@ -222,7 +225,7 @@ mtext(side = 1, at = 0, line = 4,
           text = paste("P.value EMD after 1000 permutations: ",format((1-result$perm_EMD), digits = 2),sep=""),col = "black",cex= 0.9,adj=0)    
 
 ## ----dist_perm2----------------------------------------------------------
-suppressWarnings(result <- dist_perm(paste0(dirname(spk_list_files[1]),"/Analysis/outputPerDIV/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv"),1000,"treatX","treatY"))
+suppressWarnings(result <- dist_perm(paste0(analysis$output_perDIV_dir,"/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv"),1000,"treatX","treatY"))
 
 plot(result$data_wt,col="blue",main=basename,type="l",lwd=3,xlab="IBI")
 points(result$data_ko,col="green",type="l",lwd=3)

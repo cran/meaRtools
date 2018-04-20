@@ -243,23 +243,30 @@ experimental_log_file &lt;- system.file(&quot;extdata&quot;,&quot;exampleRecordi
 <p>Before starting the actual loading of the data, lets also set  input and output directories</p>
 
 <pre><code class="r"># The next command will get the directory of the csv files
-data_dir&lt;-dirname(spk_list_files[1])
+data_dir&lt;-tempdir()
 
-# create the output directory as /Analysis under the data_dir
-output_dir&lt;-paste0( data_dir , &quot;/Analysis&quot; ) 
-suppressWarnings(  dir.create(output_dir) )
+# creating output under the new temp directory
+print(paste0(&quot;Creating output folders under &quot;,data_dir))
+</code></pre>
+
+<pre><code>## [1] &quot;Creating output folders under /tmp/RtmptKZku7&quot;
+</code></pre>
+
+<pre><code class="r"># create the output directory as /Analysis under the data_dir
+output_dir&lt;-file.path( data_dir , &quot;Analysis&quot; ) 
+dir.create(output_dir)
 
 # create the output directory for single recording analysis 
-output_perDIV_dir&lt;-paste0( data_dir , &quot;/Analysis/outputPerDIV&quot; ) 
-suppressWarnings(  dir.create(output_perDIV_dir) )
+output_perDIV_dir&lt;-file.path( data_dir , &quot;Analysis/outputPerDIV&quot; ) 
+dir.create(output_perDIV_dir)
 
 # create the output directory for R objects of analyzed recordings 
-r_object_dir&lt;-paste0( data_dir , &quot;/Analysis/R_Objects&quot; )
-suppressWarnings(  dir.create(r_object_dir) )
+r_object_dir&lt;-file.path( data_dir , &quot;Analysis/R_Objects&quot; )
+dir.create(r_object_dir)
 
 # create the output directory for log files
-log.dir&lt;-paste0( output_dir , &quot;/LogFiles&quot; ) 
-suppressWarnings(  dir.create(log.dir) )
+log.dir&lt;-file.path( output_dir , &quot;LogFiles&quot; ) 
+dir.create(log.dir)
 
 # For organization sake, set a list object to hold all output directories 
 analysis&lt;-list(spikeFiles = spk_list_files, output_dir = output_dir,
@@ -726,7 +733,7 @@ suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$per
 The normalized distribution and it&#39;s corrsponding EMD p-value can be extracted from the dist_perm returned object and plotted as follows:</li>
 </ul>
 
-<pre><code class="r">result &lt;- suppressWarnings(dist_perm(paste0(dirname(spk_list_files[1]),&quot;/Analysis/outputPerDIV/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv&quot;),1000,&quot;treatX&quot;,&quot;treatY&quot;))
+<pre><code class="r">result &lt;- suppressWarnings(dist_perm(paste0(analysis$output_perDIV_dir,&quot;/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv&quot;),1000,&quot;treatX&quot;,&quot;treatY&quot;))
 </code></pre>
 
 <pre><code>## 100 permutations
@@ -752,7 +759,7 @@ mtext(side = 1, at = 0, line = 4,
 
 <p>And the cumulative distribution with it&#39;s corrsponding MD p-value can be extracted as follows:</p>
 
-<pre><code class="r">suppressWarnings(result &lt;- dist_perm(paste0(dirname(spk_list_files[1]),&quot;/Analysis/outputPerDIV/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv&quot;),1000,&quot;treatX&quot;,&quot;treatY&quot;))
+<pre><code class="r">suppressWarnings(result &lt;- dist_perm(paste0(analysis$output_perDIV_dir,&quot;/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv&quot;),1000,&quot;treatX&quot;,&quot;treatY&quot;))
 </code></pre>
 
 <pre><code>## 100 permutations
