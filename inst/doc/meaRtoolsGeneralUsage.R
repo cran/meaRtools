@@ -14,7 +14,7 @@ library(reshape2)
 ## ----readdata------------------------------------------------------------
 
 # set path to "_spike_list.csv" files from the file path in 'filesPath'
-spk_list_files<-c(system.file("extdata","exampleRecording_1012016_plate1_DIV1_spike_list.csv.gz",package = "meaRtools"),
+spk_list_files<-c(
                 system.file("extdata","exampleRecording_1012016_plate1_DIV3_spike_list.csv.gz",package = "meaRtools"),
                 system.file("extdata","exampleRecording_1012016_plate1_DIV4_spike_list.csv.gz",package = "meaRtools"))
 
@@ -50,7 +50,7 @@ analysis<-list(spikeFiles = spk_list_files, output_dir = output_dir,
 
 
 ## ----spike-list----------------------------------------------------------
-# A loop to go over all three recording files
+# A loop to go over all recording files
 for (i in 1:length(spk_list_files)){
   #save title for output file name
   title<-strsplit(basename(spk_list_files[i]), ".csv")[[1]][1]
@@ -95,7 +95,7 @@ for (i in 1:length(s)) {
 s[[1]]$spikes$B3_41
 
 ## ----E7_42---------------------------------------------------------------
-s[[2]]$allb$E7_42
+s[[1]]$allb$E7_42
 
 ## ----all-features--------------------------------------------------------
 
@@ -216,18 +216,18 @@ suppressMessages(permute_features_and_plot(s, "treatX", parameters$perm_n, nb_fe
 
 
 ## ----dist_perm-----------------------------------------------------------
-result <- suppressWarnings(dist_perm(paste0(analysis$output_perDIV_dir,"/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv"),1000,"treatX","treatY"))
+result <- suppressWarnings(dist_perm(paste0(analysis$output_perDIV_dir,"/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_isi_distributions.csv"),1000,"treatX","treatY"))
 
-plot(result$data_wt_original,col="blue",main=basename,type="l",lwd=3,xlab="IBI")
+plot(result$data_wt_original,col="blue",main=basename,type="l",lwd=3,xlab="ISI")
 points(result$data_ko_original,col="green",type="l",lwd=3)
 par(mfrow=c(1,1))  
 mtext(side = 1, at = 0, line = 4,
           text = paste("P.value EMD after 1000 permutations: ",format((1-result$perm_EMD), digits = 2),sep=""),col = "black",cex= 0.9,adj=0)    
 
 ## ----dist_perm2----------------------------------------------------------
-suppressWarnings(result <- dist_perm(paste0(analysis$output_perDIV_dir,"/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv"),1000,"treatX","treatY"))
+suppressWarnings(result <- dist_perm(paste0(analysis$output_perDIV_dir,"/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_isi_distributions.csv"),1000,"treatX","treatY"))
 
-plot(result$data_wt,col="blue",main=basename,type="l",lwd=3,xlab="IBI")
+plot(result$data_wt,col="blue",main=basename,type="l",lwd=3,xlab="ISI")
 points(result$data_ko,col="green",type="l",lwd=3)
 par(mfrow=c(1,1))  
 mtext(side = 1, at = 0, line = 4,

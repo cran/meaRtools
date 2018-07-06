@@ -39,3 +39,38 @@ dt = 0.5;  plot(sttcp(a, c, dt = dt, beg = beg, end = end), main=sprintf("a x c:
 dt = 0.1;  plot(sttcp(a, c, dt = dt, beg = beg, end = end), main=sprintf("a x c: dt = %.3f",dt))
 dt = 0.05; plot(sttcp(a, c, dt = dt, beg = beg, end = end), main=sprintf("a x c: dt = %.3f",dt))
 
+## ---------------------------------------------------------
+demas_platelayout = list(n_well = 6,
+                        wells = paste0("w", 1:6),
+                        n_well_r = 2,
+                        n_well_c = 3,
+                        layout = c(3, 2),
+                        n_elec_r = 8,
+                        n_elec_c = 8,
+                        xlim = c(-100, 7200),
+                        ylim = c(0, 6000),
+                        spacing = 200,
+                        corr_breaks = 0
+                        )
+add_plateinfo("demas-6well", demas_platelayout)
+times = system.file("extdata/textreader/demas.times", package="meaRtools")
+pos = system.file("extdata/textreader/demas.pos", package="meaRtools")
+s = read_spikelist_text(times, pos, array="demas-6well")
+
+## ---------------------------------------------------------
+sttc_results = compute_sttc_by_well(s)
+head(sttc_results)
+
+## ----fig.width = 6, fig.height=6--------------------------
+require(lattice)
+xyplot(STTC ~ Distance | Well, data = sttc_results,
+       main = "STTC by well",
+       pch=20, xlab = "Distance (um)")
+
+## ---------------------------------------------------------
+sttc_file = tempfile(fileext=".csv")
+write.csv(sttc_results, file=sttc_file, row.names=FALSE)
+
+## ---------------------------------------------------------
+cat(readLines(sttc_file, 10), sep='\n')
+

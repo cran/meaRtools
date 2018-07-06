@@ -1,302 +1,354 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Installing the package</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
 
-<script type="text/javascript">
-window.onload = function() {
-  var imgs = document.getElementsByTagName('img'), i, img;
-  for (i = 0; i < imgs.length; i++) {
-    img = imgs[i];
-    // center an image if it is the only element of its parent
-    if (img.parentElement.childElementCount === 1)
-      img.parentElement.style.textAlign = 'center';
-  }
-};
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Styles for R syntax highlighter -->
+<meta name="author" content="Sahar Gelfman" />
+
+<meta name="date" content="2018-07-06" />
+
+<title>meaRtools: Performing a Comprehensive Analysis of Multiple MEA Recordings</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-   pre .operator,
-   pre .paren {
-     color: rgb(104, 118, 135)
-   }
-
-   pre .literal {
-     color: #990073
-   }
-
-   pre .number {
-     color: #099;
-   }
-
-   pre .comment {
-     color: #998;
-     font-style: italic
-   }
-
-   pre .keyword {
-     color: #900;
-     font-weight: bold
-   }
-
-   pre .identifier {
-     color: rgb(0, 0, 0);
-   }
-
-   pre .string {
-     color: #d14;
-   }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<!-- R syntax highlighter -->
-<script type="text/javascript">
-var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
-hljs.initHighlightingOnLoad();
-</script>
 
 
-
-<style type="text/css">
-body, td {
-   font-family: sans-serif;
-   background-color: white;
-   font-size: 13px;
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
 }
-
-body {
-  max-width: 800px;
-  margin: auto;
-  padding: 1em;
-  line-height: 20px;
+#header {
+text-align: center;
 }
-
-tt, code, pre {
-   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
 }
-
-h1 {
-   font-size:2.2em;
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
 }
-
-h2 {
-   font-size:1.8em;
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
 }
-
-h3 {
-   font-size:1.4em;
+#TOC ul ul {
+margin-left: -2em;
 }
-
-h4 {
-   font-size:1.0em;
+#TOC li {
+line-height: 16px;
 }
-
-h5 {
-   font-size:0.9em;
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
 }
-
-h6 {
-   font-size:0.8em;
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
 }
-
-a:visited {
-   color: rgb(50%, 0%, 50%);
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
 }
-
-pre, img {
-  max-width: 100%;
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
 }
 pre {
-  overflow-x: auto;
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
 }
-pre code {
-   display: block; padding: 0.5em;
+pre:not([class]) {
+background-color: #f7f7f7;
 }
-
 code {
-  font-size: 92%;
-  border: 1px solid #ccc;
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
 }
-
-code[class] {
-  background-color: #F8F8F8;
+p > code, li > code {
+padding: 2px 0px;
 }
-
-table, td, th {
-  border: none;
+div.figure {
+text-align: center;
 }
-
-blockquote {
-   color:#666666;
-   margin:0;
-   padding-left: 1em;
-   border-left: 0.5em #EEE solid;
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
 }
-
-hr {
-   height: 0px;
-   border-bottom: none;
-   border-top-width: thin;
-   border-top-style: dotted;
-   border-top-color: #999999;
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
 }
-
-@media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
-   }
-
-   body {
-      font-size:12pt;
-      max-width:100%;
-   }
-
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
-      visibility: hidden;
-      page-break-before: always;
-   }
-
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
-   }
-
-   tr, img {
-      page-break-inside: avoid;
-   }
-
-   img {
-      max-width: 100% !important;
-   }
-
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
-   }
-
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
-   }
-
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
-   }
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
 }
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
 </style>
-
-
 
 </head>
 
 <body>
-<p>meaRtools was constructed to provide core algorithms for MEA spike train analysis, feature extraction, statistical analysis and plotting of multiple MEA recordings with multiple genotypes and treatments. This vignette directs the package user on how to perform an analysis of an exemplary experiment that is made of three sequential recordings of the same plate.</p>
 
+
+
+
+<h1 class="title toc-ignore">meaRtools: Performing a Comprehensive Analysis of Multiple MEA Recordings</h1>
+<h4 class="author"><em>Sahar Gelfman</em></h4>
+<h4 class="date"><em>2018-07-06</em></h4>
+
+
+
+<p>meaRtools was constructed to provide core algorithms for MEA spike train analysis, feature extraction, statistical analysis and plotting of multiple MEA recordings with multiple genotypes and treatments. This vignette directs the package user on how to perform an analysis of an exemplary experiment that is made of two sequential recordings of the same plate.</p>
+<section id="installing-the-package" class="level2">
 <h2>Installing the package</h2>
-
 <p>The meaRtools package is available for installation under the CRAN repository:</p>
-
-<pre><code class="r">#install.packages( &quot;meaRtools&quot;,repos=&quot;http://cran.us.r-project.org&quot;)
-</code></pre>
-
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#install.packages( &quot;meaRtools&quot;,repos=&quot;http://cran.us.r-project.org&quot;)</span></a></code></pre></div>
+</section>
+<section id="loading-the-package" class="level2">
 <h2>Loading the package</h2>
-
 <p>To load the package please load meaRtools and dependencies:</p>
-
-<pre><code class="r">library(meaRtools)
-</code></pre>
-
-<pre><code>## Warning: no DISPLAY variable so Tk is not available
-</code></pre>
-
-<pre><code class="r">library(plyr)
-library(ggplot2)
-library(reshape2)
-</code></pre>
-
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(meaRtools)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(plyr)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">library</span>(reshape2)</a></code></pre></div>
+</section>
+<section id="selecting-input-files" class="level2">
 <h2>Selecting input files</h2>
-
 <p>Before we can perform the analysis we need to locate the recording spikeList.csv files. For this purpose we will choose three recording .csv files and a plate layout .csv file that come with the meaRtools package under /meaRtools/extdata/ :</p>
-
-<pre><code class="r"># set path to &quot;_spike_list.csv&quot; files from the file path in &#39;filesPath&#39;
-spk_list_files&lt;-c(system.file(&quot;extdata&quot;,&quot;exampleRecording_1012016_plate1_DIV1_spike_list.csv.gz&quot;,package = &quot;meaRtools&quot;),
-                system.file(&quot;extdata&quot;,&quot;exampleRecording_1012016_plate1_DIV3_spike_list.csv.gz&quot;,package = &quot;meaRtools&quot;),
-                system.file(&quot;extdata&quot;,&quot;exampleRecording_1012016_plate1_DIV4_spike_list.csv.gz&quot;,package = &quot;meaRtools&quot;))
-
-# set the recording layout file &quot;_expLog.csv&quot;
-experimental_log_file &lt;- system.file(&quot;extdata&quot;,&quot;exampleRecording_1012016_plate1_expLog.csv.gz&quot;,package = &quot;meaRtools&quot;)
-</code></pre>
-
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># set path to &quot;_spike_list.csv&quot; files from the file path in 'filesPath'</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">spk_list_files&lt;-<span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">                <span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;exampleRecording_1012016_plate1_DIV3_spike_list.csv.gz&quot;</span>,<span class="dt">package =</span> <span class="st">&quot;meaRtools&quot;</span>),</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                <span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;exampleRecording_1012016_plate1_DIV4_spike_list.csv.gz&quot;</span>,<span class="dt">package =</span> <span class="st">&quot;meaRtools&quot;</span>))</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># set the recording layout file &quot;_expLog.csv&quot;</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">experimental_log_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;exampleRecording_1012016_plate1_expLog.csv.gz&quot;</span>,<span class="dt">package =</span> <span class="st">&quot;meaRtools&quot;</span>)</a></code></pre></div>
+</section>
+<section id="setting-output-directories" class="level2">
 <h2>Setting output directories</h2>
-
-<p>Before starting the actual loading of the data, lets also set  input and output directories</p>
-
-<pre><code class="r"># The next command will get the directory of the csv files
-data_dir&lt;-tempdir()
-
-# creating output under the new temp directory
-print(paste0(&quot;Creating output folders under &quot;,data_dir))
-</code></pre>
-
-<pre><code>## [1] &quot;Creating output folders under /tmp/RtmptKZku7&quot;
-</code></pre>
-
-<pre><code class="r"># create the output directory as /Analysis under the data_dir
-output_dir&lt;-file.path( data_dir , &quot;Analysis&quot; ) 
-dir.create(output_dir)
-
-# create the output directory for single recording analysis 
-output_perDIV_dir&lt;-file.path( data_dir , &quot;Analysis/outputPerDIV&quot; ) 
-dir.create(output_perDIV_dir)
-
-# create the output directory for R objects of analyzed recordings 
-r_object_dir&lt;-file.path( data_dir , &quot;Analysis/R_Objects&quot; )
-dir.create(r_object_dir)
-
-# create the output directory for log files
-log.dir&lt;-file.path( output_dir , &quot;LogFiles&quot; ) 
-dir.create(log.dir)
-
-# For organization sake, set a list object to hold all output directories 
-analysis&lt;-list(spikeFiles = spk_list_files, output_dir = output_dir,
-           r_output_dir = r_object_dir, output_perDIV_dir = output_perDIV_dir)
-</code></pre>
-
-<p>Now let&#39;s load the recordings and create the &#39;spike.list&#39; class R object</p>
-
-<pre><code class="r"># A loop to go over all three recording files
-for (i in 1:length(spk_list_files)){
-  #save title for output file name
-  title&lt;-strsplit(basename(spk_list_files[i]), &quot;.csv&quot;)[[1]][1]
-  #load plate design info for each file in the list
-  plate_chem_info&lt;-get_experimental_log_file(spk_list_files[i], experimental_log_file)
-
-    # convert the spike list data to a &#39;spike.list&#39; class Robject
-  analysis$Robject[i]&lt;-read_spikelist(key=title, spk_list_file=spk_list_files[i],          chem_info=plate_chem_info,r_object_dir=r_object_dir) 
-}
-</code></pre>
-
-<pre><code>## Total number of spikes: 117109
-## Unique number of electrodes: 257
-## Time range [0.010 40.622] (seconds)
-##                                         nelectrodes nspikes time.min
-## exampleRecording_1012016_plate1_DIV1.gz         257  117109     0.01
-##                                         time.max
-## exampleRecording_1012016_plate1_DIV1.gz   40.622
-##  [1] &quot;spikes&quot;    &quot;scount&quot;    &quot;epos&quot;      &quot;names&quot;     &quot;array&quot;    
-##  [6] &quot;treatment&quot; &quot;dose&quot;      &quot;size&quot;      &quot;well&quot;      &quot;units&quot;    
-## Total number of spikes: 100957
+<p>Before starting the actual loading of the data, lets also set input and output directories</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># The next command will get the directory of the csv files</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">data_dir&lt;-<span class="kw">tempdir</span>()</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># creating output under the new temp directory</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">&quot;Creating output folders under &quot;</span>,data_dir))</a></code></pre></div>
+<pre><code>## [1] &quot;Creating output folders under /var/folders/mn/tjk6zsyd6cz3rxb5vwkyn0p80000gp/T//RtmpgZhGda&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># create the output directory as /Analysis under the data_dir</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">output_dir&lt;-<span class="kw">file.path</span>( data_dir , <span class="st">&quot;Analysis&quot;</span> ) </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">dir.create</span>(output_dir)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co"># create the output directory for single recording analysis </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">output_perDIV_dir&lt;-<span class="kw">file.path</span>( data_dir , <span class="st">&quot;Analysis/outputPerDIV&quot;</span> ) </a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">dir.create</span>(output_perDIV_dir)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co"># create the output directory for R objects of analyzed recordings </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">r_object_dir&lt;-<span class="kw">file.path</span>( data_dir , <span class="st">&quot;Analysis/R_Objects&quot;</span> )</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw">dir.create</span>(r_object_dir)</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co"># create the output directory for log files</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">log.dir&lt;-<span class="kw">file.path</span>( output_dir , <span class="st">&quot;LogFiles&quot;</span> ) </a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="kw">dir.create</span>(log.dir)</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co"># For organization sake, set a list object to hold all output directories </span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18">analysis&lt;-<span class="kw">list</span>(<span class="dt">spikeFiles =</span> spk_list_files, <span class="dt">output_dir =</span> output_dir,</a>
+<a class="sourceLine" id="cb6-19" data-line-number="19">           <span class="dt">r_output_dir =</span> r_object_dir, <span class="dt">output_perDIV_dir =</span> output_perDIV_dir)</a></code></pre></div>
+<p>Now let’s load the recordings and create the ‘spike.list’ class R object</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># A loop to go over all recording files</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(spk_list_files)){</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="co">#save title for output file name</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  title&lt;-<span class="kw">strsplit</span>(<span class="kw">basename</span>(spk_list_files[i]), <span class="st">&quot;.csv&quot;</span>)[[<span class="dv">1</span>]][<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  <span class="co">#load plate design info for each file in the list</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">  plate_chem_info&lt;-<span class="kw">get_experimental_log_file</span>(spk_list_files[i], experimental_log_file)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="co"># convert the spike list data to a 'spike.list' class Robject</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">  analysis<span class="op">$</span>Robject[i]&lt;-<span class="kw">read_spikelist</span>(<span class="dt">key=</span>title, <span class="dt">spk_list_file=</span>spk_list_files[i],          <span class="dt">chem_info=</span>plate_chem_info,<span class="dt">r_object_dir=</span>r_object_dir) </a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">}</a></code></pre></div>
+<pre><code>## Total number of spikes: 100957
 ## Unique number of electrodes: 269
 ## Time range [0.010 57.678] (seconds)
 ##                                         nelectrodes nspikes time.min
@@ -313,111 +365,74 @@ for (i in 1:length(spk_list_files)){
 ##                                         time.max
 ## exampleRecording_1012016_plate1_DIV4.gz  61.7608
 ##  [1] &quot;spikes&quot;    &quot;scount&quot;    &quot;epos&quot;      &quot;names&quot;     &quot;array&quot;    
-##  [6] &quot;treatment&quot; &quot;dose&quot;      &quot;size&quot;      &quot;well&quot;      &quot;units&quot;
-</code></pre>
-
+##  [6] &quot;treatment&quot; &quot;dose&quot;      &quot;size&quot;      &quot;well&quot;      &quot;units&quot;</code></pre>
+</section>
+<section id="extracting-spike-and-burst-data" class="level2">
 <h2>Extracting spike and burst data</h2>
-
-<p>Now we have the information from each spike list file  in a new &#39;spike.list&#39; R object that will be next saved in the /Analysis/Robject directory</p>
-
-<p>The next step will be to construct a list of the objects for each recording and extract the features.
-But first, let&#39;s load the default parameters that come with the package, each one can be set by the user. This file contains default parameters for all the functions, and we&#39;ll mention some of them here.</p>
-
-<pre><code class="r">data(&quot;parameters&quot;)
-</code></pre>
-
-<p>You can change the timestamp of the analysis parameters so that you can track the time the analysis was done
-by: parameters$timeStamp=format(Sys.time(), &ldquo;%m-%d-%y<em>%H</em>%M%_%S&rdquo;)
-For this example we are using the default which is &ldquo;DATE_TIME&rdquo; and will be printed in the output file names</p>
-
+<p>Now we have the information from each spike list file in a new ‘spike.list’ R object that will be next saved in the /Analysis/Robject directory</p>
+<p>The next step will be to construct a list of the objects for each recording and extract the features. But first, let’s load the default parameters that come with the package, each one can be set by the user. This file contains default parameters for all the functions, and we’ll mention some of them here.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;parameters&quot;</span>)</a></code></pre></div>
+<p>You can change the timestamp of the analysis parameters so that you can track the time the analysis was done by: parameters$timeStamp=format(Sys.time(), &quot;%m-%d-%y_%H_%M%_%S“) For this example we are using the default which is”DATE_TIME&quot; and will be printed in the output file names</p>
+</section>
+<section id="extracting-spike-and-burst-features" class="level2">
 <h2>Extracting spike and burst features</h2>
-
-<p>calculate_spike_features is the first function used in the analysis pipeline, as that, this function also constructs the &#39;spike.list&#39; object (called &#39;s&#39; here) and sets the parameters for the analysis inside the object.
-We now set the defaults for an active electrode as in the parameters object, setting the minimum MFR to a lenient 1 spike in 60s and a maximum MFR of 1,000Hz. We also set the minimum of active electrodes to include a well in the analyses to 4 electrodes, which is 25% of the electrodes in a 48-well plate. </p>
-
-<p>The parameters also hold the selected algorithm for burst detection: &ldquo;mi&rdquo; for Maximum Interval and &ldquo;si&rdquo; for the Poisson Surprise algorithm in parameters$burst_type. To extract burst features we use calculate_burst_features.  For this example let&#39;s use the &ldquo;ps&rdquo; algorithm, so we have to set it before calling the object initializing function.</p>
-
-<pre><code class="r"># Construct the &#39;spike.list&#39; object and calculate spike features
-s&lt;-calculate_spike_features(analysis$Robject, parameters)
-
-# As mutual information and entropy values are considered spike features, we will calculate them here
-# based on the spike data of each electrode
-for (i in 1:length(s)) {
-  ent_mi_data &lt;- calculate_entropy_and_mi(s[[i]], s[[i]]$treatment, mult_factor=1.5, bin_size=0.1)
-  s[[i]]$mutual_inf &lt;- ent_mi_data[[&quot;data_dists&quot;]][[&quot;MI&quot;]]
-  s[[i]]$entropy &lt;- ent_mi_data [[&quot;data_dists&quot;]][[&quot;ENT&quot;]]
-}
-
-# Select burst algorithm
-parameters$burst_type=&quot;ps&quot;
-
-# Detect bursts and calculate their feature statistics
-s&lt;-calculate_burst_features(s)
-
-# Iterate through all the recordings to calculate inter-spike intervals and well level mean firing rate and add that to the &#39;spike.list&#39; object
-
-for (i in 1:length(s)) {
-  s[[i]] &lt;- calculate_isis(s[[i]])
-  s[[i]]$well_stats &lt;- compute_mean_firingrate_by_well(s[[i]])
-}
-</code></pre>
-
-<p>That&#39;s it, basic spike and burst features are now stored in the &#39;spike.list&#39; object (s) for each of the recordings.
-We can now view them by looking into the object. For example, to view spikes for electrode B3_41 in the first recording, try the following:</p>
-
-<pre><code class="r">s[[1]]$spikes$B3_41
-</code></pre>
-
-<pre><code>##  [1]  0.55344  2.84256  9.51040 10.51240 12.84232 14.17480 20.87056
-##  [8] 21.53936 23.87976 26.23032 30.24168 35.28688
-</code></pre>
-
+<p>calculate_spike_features is the first function used in the analysis pipeline, as that, this function also constructs the ‘spike.list’ object (called ‘s’ here) and sets the parameters for the analysis inside the object. We now set the defaults for an active electrode as in the parameters object, setting the minimum MFR to a lenient 1 spike in 60s and a maximum MFR of 1,000Hz. We also set the minimum of active electrodes to include a well in the analyses to 4 electrodes, which is 25% of the electrodes in a 48-well plate.</p>
+<p>The parameters also hold the selected algorithm for burst detection: “mi” for Maximum Interval and “si” for the Poisson Surprise algorithm in parameters$burst_type. To extract burst features we use calculate_burst_features. For this example let’s use the “ps” algorithm, so we have to set it before calling the object initializing function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Construct the 'spike.list' object and calculate spike features</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">s&lt;-<span class="kw">calculate_spike_features</span>(analysis<span class="op">$</span>Robject, parameters)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># As mutual information and entropy values are considered spike features, we will calculate them here</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co"># based on the spike data of each electrode</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(s)) {</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">  ent_mi_data &lt;-<span class="st"> </span><span class="kw">calculate_entropy_and_mi</span>(s[[i]], s[[i]]<span class="op">$</span>treatment, <span class="dt">mult_factor=</span><span class="fl">1.5</span>, <span class="dt">bin_size=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">  s[[i]]<span class="op">$</span>mutual_inf &lt;-<span class="st"> </span>ent_mi_data[[<span class="st">&quot;data_dists&quot;</span>]][[<span class="st">&quot;MI&quot;</span>]]</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">  s[[i]]<span class="op">$</span>entropy &lt;-<span class="st"> </span>ent_mi_data [[<span class="st">&quot;data_dists&quot;</span>]][[<span class="st">&quot;ENT&quot;</span>]]</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co"># Select burst algorithm</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">parameters<span class="op">$</span>burst_type=<span class="st">&quot;ps&quot;</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co"># Detect bursts and calculate their feature statistics</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">s&lt;-<span class="kw">calculate_burst_features</span>(s)</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co"># Iterate through all the recordings to calculate inter-spike intervals and well level mean firing rate and add that to the 'spike.list' object</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(s)) {</a>
+<a class="sourceLine" id="cb10-21" data-line-number="21">  s[[i]] &lt;-<span class="st"> </span><span class="kw">calculate_isis</span>(s[[i]])</a>
+<a class="sourceLine" id="cb10-22" data-line-number="22">  s[[i]]<span class="op">$</span>well_stats &lt;-<span class="st"> </span><span class="kw">compute_mean_firingrate_by_well</span>(s[[i]])</a>
+<a class="sourceLine" id="cb10-23" data-line-number="23">}</a></code></pre></div>
+<p>That’s it, basic spike and burst features are now stored in the ‘spike.list’ object (s) for each of the recordings. We can now view them by looking into the object. For example, to view spikes for electrode B3_41 in the first recording, try the following:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">s[[<span class="dv">1</span>]]<span class="op">$</span>spikes<span class="op">$</span>B3_<span class="dv">41</span></a></code></pre></div>
+<pre><code>## [1] 14.83456</code></pre>
 <p>To view burst information for bursts calculated for electrode E7_42 of the 2nd recording, try the following:</p>
-
-<pre><code class="r">s[[2]]$allb$E7_42
-</code></pre>
-
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">s[[<span class="dv">1</span>]]<span class="op">$</span>allb<span class="op">$</span>E7_<span class="dv">42</span></a></code></pre></div>
 <pre><code>##      beg end      ibi len    durn mean_isis si
 ## [1,]  11  16       NA   6 0.55776 0.1115520  1
 ## [2,]  39  43 14.34256   5 0.31488 0.0787200  1
-## [3,]  57  63 14.28024   7 0.60760 0.1012667  1
-</code></pre>
-
-<p>beg and end stand for the sequential spike  that begins and ends the burst. IBI is the inter burst interval from the previous burst. len is the number of spikes in the burst. durn is the burst duration in seconds. mean_isis is the average inter spike intervals within this burst and SI is the surprise index, only relevant when running the poisson surprise algorithm.</p>
-
+## [3,]  57  63 14.28024   7 0.60760 0.1012667  1</code></pre>
+<p>beg and end stand for the sequential spike that begins and ends the burst. IBI is the inter burst interval from the previous burst. len is the number of spikes in the burst. durn is the burst duration in seconds. mean_isis is the average inter spike intervals within this burst and SI is the surprise index, only relevant when running the poisson surprise algorithm.</p>
+<section id="extracting-network-spike-data" class="level4">
 <h4>Extracting network spike data</h4>
-
-<p>To calculate network spikes we iterate over all the recordings , for each recording we  1) calculate the network spikes and 2) extract the network spike features from the spike.list object. To call network spikes, we provide the function calculate_network_spikes with several arguments: </p>
-
-<p>s[[i]] - the first is the &#39;spike.list&#39; object of the recording</p>
-
+<p>To calculate network spikes we iterate over all the recordings , for each recording we 1) calculate the network spikes and 2) extract the network spike features from the spike.list object. To call network spikes, we provide the function calculate_network_spikes with several arguments:</p>
+<p>s[[i]] - the first is the ‘spike.list’ object of the recording</p>
 <p>sur - the number of datapoints to be used in summmarizing mean network spikes (default is 100)</p>
-
-<p>ns_n - the number of electrodes above which  a network spike will be called </p>
-
-<p>ns_t - the time window for calling a network spike (10ms). </p>
-
-<p>For extracting the features into the &#39;spike.list&#39; object, we use IGM.summary.network.spikes and provide it with the &#39;spike.list&#39; object, the calculated network spikes data, the minimum number of spikes in each electrode that we wish to consider (default is 1) and agaiun the &#39;sur&#39; parameter from above.</p>
-
-<pre><code class="r"># Iterate through all the recordings
-for (i in 1:length(s)) {
-
-  #Calculate Network Spikes
-  nspikes_old &lt;- calculate_network_spikes(s[[i]],parameters$sur, parameters$ns_n, parameters$ns_t)
-
-  # Extract network spike features that will be printed later
-  nspikes &lt;- summarize_network_spikes(s[[i]],nspikes_old,ns_e = 1, parameters$sur)
-
-  # Add network spike data to the &#39;spike.list&#39; object
-  s[[i]]$ns_all&lt;-nspikes$ns_all
-}
-</code></pre>
-
+<p>ns_n - the number of electrodes above which a network spike will be called</p>
+<p>ns_t - the time window for calling a network spike (10ms).</p>
+<p>For extracting the features into the ‘spike.list’ object, we use IGM.summary.network.spikes and provide it with the ‘spike.list’ object, the calculated network spikes data, the minimum number of spikes in each electrode that we wish to consider (default is 1) and agaiun the ‘sur’ parameter from above.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Iterate through all the recordings</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(s)) {</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">  <span class="co">#Calculate Network Spikes</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">  nspikes_old &lt;-<span class="st"> </span><span class="kw">calculate_network_spikes</span>(s[[i]],parameters<span class="op">$</span>sur, parameters<span class="op">$</span>ns_n, parameters<span class="op">$</span>ns_t)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">  <span class="co"># Extract network spike features that will be printed later</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">  nspikes &lt;-<span class="st"> </span><span class="kw">summarize_network_spikes</span>(s[[i]],nspikes_old,<span class="dt">ns_e =</span> <span class="dv">1</span>, parameters<span class="op">$</span>sur)</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">  <span class="co"># Add network spike data to the 'spike.list' object</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">  s[[i]]<span class="op">$</span>ns_all&lt;-nspikes<span class="op">$</span>ns_all</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">}</a></code></pre></div>
 <p>We now have all the network spike features calculated and we can look at them easily. Try running the following to see the features extracted for well B5 :</p>
-
-<pre><code class="r">s[[i]]$ns_all$B5$en_brief
-</code></pre>
-
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">s[[i]]<span class="op">$</span>ns_all<span class="op">$</span>B5<span class="op">$</span>en_brief</a></code></pre></div>
 <pre><code>##       spikes ns spikes_in_ns percent_of_spikes_in_ns mean_spikes_per_ns
 ## B5_11     86  2            2                2.325581           1.000000
 ## B5_13    103  2            2                1.941748           1.000000
@@ -439,303 +454,200 @@ for (i in 1:length(s)) {
 ## B5_34        0.0000000   1.096667
 ## B5_41        0.0000000   4.410000
 ## B5_42               NA         NA
-## B5_44        0.5773503   1.645000
-</code></pre>
-
+## B5_44        0.5773503   1.645000</code></pre>
+</section>
+<section id="extracting-network-bursts-data" class="level4">
 <h4>Extracting network bursts data</h4>
-
-<p>The last attribute we can extract is network bursts. To extract network bursts we do not require iterating through the &#39;spike.list&#39; object, that is done automatically by calculate_network_bursts. We provide the function with several arguments alongside the &#39;spike.list&#39; object: 
-Sigma - the window sizes used for the analysis (10, 20 and 50ms)</p>
-
-<p>min_electrodes - the minimum electrodes to call a network burst </p>
-
+<p>The last attribute we can extract is network bursts. To extract network bursts we do not require iterating through the ‘spike.list’ object, that is done automatically by calculate_network_bursts. We provide the function with several arguments alongside the ‘spike.list’ object: Sigma - the window sizes used for the analysis (10, 20 and 50ms)</p>
+<p>min_electrodes - the minimum electrodes to call a network burst</p>
 <p>local_region_min_nae - to tell the algorithm if we would like to use an adaptive threshold (default is 0).</p>
-
-<pre><code class="r">   nb.list &lt;- calculate_network_bursts(s,parameters$Sigma,
-                                       parameters$min_electrodes,
-                                       parameters$local_region_min_nae)
-</code></pre>
-
-<pre><code>## calculating network bursts for recording exampleRecording_1012016_plate1_DIV1.RData
-## calculating network bursts for recording exampleRecording_1012016_plate1_DIV3.RData
-## calculating network bursts for recording exampleRecording_1012016_plate1_DIV4.RData
-</code></pre>
-
-<pre><code class="r">    nb_features &lt;- nb_matrix_to_feature_dfs( nb.list$nb_features_merged )
-
-    # attach data to s object
-    for (i in 1:length(s) ){
-      s[[i]]$nb_all&lt;-nb.list$nb_all[[i]]
-      s[[i]]$data.frame$nb_features&lt;-nb.list$nb_features[[i]]
-    }
-</code></pre>
-
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">   nb.list &lt;-<span class="st"> </span><span class="kw">calculate_network_bursts</span>(s,parameters<span class="op">$</span>Sigma,</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">                                       parameters<span class="op">$</span>min_electrodes,</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">                                       parameters<span class="op">$</span>local_region_min_nae)</a></code></pre></div>
+<pre><code>## calculating network bursts for recording exampleRecording_1012016_plate1_DIV3.RData
+## calculating network bursts for recording exampleRecording_1012016_plate1_DIV4.RData</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">    nb_features &lt;-<span class="st"> </span><span class="kw">nb_matrix_to_feature_dfs</span>( nb.list<span class="op">$</span>nb_features_merged )</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">    <span class="co"># attach data to s object</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(s) ){</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">      s[[i]]<span class="op">$</span>nb_all&lt;-nb.list<span class="op">$</span>nb_all[[i]]</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">      s[[i]]<span class="op">$</span>data.frame<span class="op">$</span>nb_features&lt;-nb.list<span class="op">$</span>nb_features[[i]]</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">    }</a></code></pre></div>
+</section>
+</section>
+<section id="computing-spike-train-correlations" class="level2">
 <h2>Computing spike train correlations</h2>
-
-<p>To compute the nature of correlated activity, we can use the spike
-train tiling coefficient (STTC), proposed by Cutts and Eglen (2014, J
-Neuroscience).  For example here we calculate the mean pairwise STTC,
-averaged over all distinct pairs of electrodes in a well.  This is
-then stored as the <code>mean_sttc</code> in the well object.</p>
-
-<pre><code class="r">for (i in 1:length(s)) {
-  s[[i]]$mean_sttc &lt;- compute_mean_sttc_by_well(s[[i]])
-}
-</code></pre>
-
-<p>For example, here are the mean correlations for all wells on the first
-plate (ignoring any wells that have 0 or 1 electrode):</p>
-
-<pre><code class="r">unlist(s[[1]]$mean_sttc)
-</code></pre>
-
-<pre><code>##        E2        E3        E5        E6        E7        D2        D3 
-## 0.7269896 0.6710726 0.6928038 0.3774196 0.1535705 0.6866305 0.7323743 
-##        D6        D7        C2        C3        C6        C7        B2 
-## 0.2426247 0.2603817 0.7323048 0.7490127 0.6100154 0.1359137 0.6867357 
-##        B3        B4        B5        B6        B7 
-## 0.7271794 0.6216049 0.5391142 0.4054224 0.1601257
-</code></pre>
-
-<p>For further information about the STTC measure, see the separate
-vignette, <code>sttc.Rmd</code>.</p>
-
+<p>To compute the nature of correlated activity, we can use the spike train tiling coefficient (STTC), proposed by Cutts and Eglen (2014, J Neuroscience). For example here we calculate the mean pairwise STTC, averaged over all distinct pairs of electrodes in a well. This is then stored as the <code>mean_sttc</code> in the well object.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(s)) {</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">  s[[i]]<span class="op">$</span>mean_sttc &lt;-<span class="st"> </span><span class="kw">compute_mean_sttc_by_well</span>(s[[i]])</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">}</a></code></pre></div>
+<p>For example, here are the mean correlations for all wells on the first plate (ignoring any wells that have 0 or 1 electrode):</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">unlist</span>(s[[<span class="dv">1</span>]]<span class="op">$</span>mean_sttc)</a></code></pre></div>
+<pre><code>##        E2        E3        E4        E5        E6        E7        D2 
+## 0.6872915 0.6679063 0.7111581 0.7648321 0.4163986 0.1673084 0.7511649 
+##        D3        D5        D6        D7        C2        C3        C6 
+## 0.6838312 0.6438838 0.2251951 0.2401321 0.7418769 0.7098640 0.3933835 
+##        C7        B2        B3        B4        B6        B7 
+## 0.1724659 0.7611882 0.7397869 0.6627209 0.4013349 0.1410473</code></pre>
+<p>For further information about the STTC measure, see the separate vignette, <code>sttc.Rmd</code>.</p>
+</section>
+<section id="writing-and-plotting-single-recording-data" class="level2">
 <h2>Writing and plotting single recording data</h2>
-
-<p>At this point you might wonder how to produce burst feature distributions that meaRtools produces. The answer is that since the distributions derive from the burst features that were already calculated,  they are automatically constructed as part of the printing process of burst features. So, next we turn to printing the extracted features for each single recording. When printing burst features, we&#39;ll come back to producing burst feature distribution.</p>
-
+<p>At this point you might wonder how to produce burst feature distributions that meaRtools produces. The answer is that since the distributions derive from the burst features that were already calculated, they are automatically constructed as part of the printing process of burst features. So, next we turn to printing the extracted features for each single recording. When printing burst features, we’ll come back to producing burst feature distribution.</p>
+<section id="printing-spike-data" class="level3">
 <h3>printing spike data</h3>
-
-<pre><code class="r"># print spikes graphs (pdf format) for each recording
-plot_plate_summary_for_spikes(s,analysis$output_perDIV_dir)
-
-# write spike feature tables for each recording
-suppressWarnings(write_plate_summary_for_spikes(s,analysis$output_perDIV_dir))
-</code></pre>
-
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># print spikes graphs (pdf format) for each recording</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">plot_plate_summary_for_spikes</span>(s,analysis<span class="op">$</span>output_perDIV_dir)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="co"># write spike feature tables for each recording</span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="kw">suppressWarnings</span>(<span class="kw">write_plate_summary_for_spikes</span>(s,analysis<span class="op">$</span>output_perDIV_dir))</a></code></pre></div>
+</section>
+<section id="printing-burst-data" class="level3">
 <h3>printing burst data</h3>
-
-<p>As promised, the burst feature distributions are already calculated by the burst printing functions, since they are extracted from calculated burst features. The distribution features are calculated for five burst features : burst duration, IBI, nspikes (number of spikes in a burst), spikeFreq (Hz) and ISI within bursts. When running plot_plate_summary_for_bursts, the function calls calc_burst_distributions to calculate and plot those distributions for each loaded recording. The default parameters object loaded earlier, holds five objects with 7 arguments for the five distribution features: </p>
-
+<p>As promised, the burst feature distributions are already calculated by the burst printing functions, since they are extracted from calculated burst features. The distribution features are calculated for five burst features : burst duration, IBI, nspikes (number of spikes in a burst), spikeFreq (Hz) and ISI within bursts. When running plot_plate_summary_for_bursts, the function calls calc_burst_distributions to calculate and plot those distributions for each loaded recording. The default parameters object loaded earlier, holds five objects with 7 arguments for the five distribution features:</p>
 <p>min_cases - the minimum number of bursts for performing the analysis</p>
-
-<p>x_axis_lim - the maximum value of that feature. In this example, we perform distribution analysis for IBI. The xlimit is 20, which means that the longest IBI taken into account here would be 20s long. </p>
-
-<p>bins_in_sec - the bins in each second of IBI. Here bins_in_sec is set to 5, meaning that the IBI distribution will  be cut into 0.2s bins in a maximum of 20s. Thus, the final distribution will be made of 100 bins of 0.2s.</p>
-
-<p>filter_by_min - a binary, to decide whether bursts should be filtered by a minimum value (default is 0) </p>
-
-<p>min_values - the actual minimum IBI to filter by. </p>
-
-<p>per_well - a binary argument, 1: the algorithm will group electrodes by well, and then group wells by treatment and 0 (default): electrodes will be grouped directly by treatment. </p>
-
-<p>perform - a binary argument meant to decide whether this distribution analysis should be performed at all. While   the default is to perform all five distributions, in this example we perform only the IBI distribution analysis    for all three recordings.</p>
-
-<pre><code class="r"># plot burst pdfs for each recording
-suppressWarnings(plot_plate_summary_for_bursts(s,analysis$output_perDIV_dir,parameters))
-</code></pre>
-
+<p>x_axis_lim - the maximum value of that feature. In this example, we perform distribution analysis for IBI. The xlimit is 20, which means that the longest IBI taken into account here would be 20s long.</p>
+<p>bins_in_sec - the bins in each second of IBI. Here bins_in_sec is set to 5, meaning that the IBI distribution will be cut into 0.2s bins in a maximum of 20s. Thus, the final distribution will be made of 100 bins of 0.2s.</p>
+<p>filter_by_min - a binary, to decide whether bursts should be filtered by a minimum value (default is 0)</p>
+<p>min_values - the actual minimum IBI to filter by.</p>
+<p>per_well - a binary argument, 1: the algorithm will group electrodes by well, and then group wells by treatment and 0 (default): electrodes will be grouped directly by treatment.</p>
+<p>perform - a binary argument meant to decide whether this distribution analysis should be performed at all. While the default is to perform all five distributions, in this example we perform only the IBI distribution analysis for all three recordings.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># plot burst pdfs for each recording</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">suppressWarnings</span>(<span class="kw">plot_plate_summary_for_bursts</span>(s,analysis<span class="op">$</span>output_perDIV_dir,parameters))</a></code></pre></div>
 <pre><code>## [1] &quot;Running IBI distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=20; bins_in_sec=5;per_well=0; duration=40.612; feature=&#39;ibi&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
-<pre><code>## [1] &quot;Running ISI distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=0.5; bins_in_sec=100;per_well=0; duration=40.612; feature=&#39;isi&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
-<pre><code>## [1] &quot;Running nSpikes in bursts distribution analysis.&quot;
-## Arguments: min_vals=5; xlimit=200; bins_in_sec=1;per_well=0; duration=40.612; feature=&#39;nspikes_in_burst&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
-<pre><code>## [1] &quot;Running duration of bursts distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=18; bins_in_sec=5;per_well=0; duration=40.612; feature=&#39;duration&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
-<pre><code>## [1] &quot;Running spike density in bursts distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=300; bins_in_sec=1;per_well=0; duration=40.612; feature=&#39;spikes_density_in_burst&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
-<pre><code>## [1] &quot;Running IBI distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=20; bins_in_sec=5;per_well=0; duration=57.66776; feature=&#39;ibi&#39;; filter_values_by_min=0; min_values=0
+## Arguments: min_vals=15; xlimit=20; bins_in_sec=5;per_well=0; duration=57.66776; feature='ibi'; filter_values_by_min=0; min_values=0
 ## [1] &quot;Running ISI distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=0.5; bins_in_sec=100;per_well=0; duration=57.66776; feature=&#39;isi&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
+## Arguments: min_vals=15; xlimit=0.5; bins_in_sec=100;per_well=0; duration=57.66776; feature='isi'; filter_values_by_min=0; min_values=0</code></pre>
 <pre><code>## [1] &quot;Running nSpikes in bursts distribution analysis.&quot;
-## Arguments: min_vals=5; xlimit=200; bins_in_sec=1;per_well=0; duration=57.66776; feature=&#39;nspikes_in_burst&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
+## Arguments: min_vals=5; xlimit=200; bins_in_sec=1;per_well=0; duration=57.66776; feature='nspikes_in_burst'; filter_values_by_min=0; min_values=0</code></pre>
 <pre><code>## [1] &quot;Running duration of bursts distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=18; bins_in_sec=5;per_well=0; duration=57.66776; feature=&#39;duration&#39;; filter_values_by_min=0; min_values=0
+## Arguments: min_vals=15; xlimit=18; bins_in_sec=5;per_well=0; duration=57.66776; feature='duration'; filter_values_by_min=0; min_values=0
 ## [1] &quot;Running spike density in bursts distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=300; bins_in_sec=1;per_well=0; duration=57.66776; feature=&#39;spikes_density_in_burst&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
+## Arguments: min_vals=15; xlimit=300; bins_in_sec=1;per_well=0; duration=57.66776; feature='spikes_density_in_burst'; filter_values_by_min=0; min_values=0</code></pre>
 <pre><code>## [1] &quot;Running IBI distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=20; bins_in_sec=5;per_well=0; duration=61.7508; feature=&#39;ibi&#39;; filter_values_by_min=0; min_values=0
+## Arguments: min_vals=15; xlimit=20; bins_in_sec=5;per_well=0; duration=61.7508; feature='ibi'; filter_values_by_min=0; min_values=0
 ## [1] &quot;Running ISI distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=0.5; bins_in_sec=100;per_well=0; duration=61.7508; feature=&#39;isi&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
+## Arguments: min_vals=15; xlimit=0.5; bins_in_sec=100;per_well=0; duration=61.7508; feature='isi'; filter_values_by_min=0; min_values=0</code></pre>
 <pre><code>## [1] &quot;Running nSpikes in bursts distribution analysis.&quot;
-## Arguments: min_vals=5; xlimit=200; bins_in_sec=1;per_well=0; duration=61.7508; feature=&#39;nspikes_in_burst&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
+## Arguments: min_vals=5; xlimit=200; bins_in_sec=1;per_well=0; duration=61.7508; feature='nspikes_in_burst'; filter_values_by_min=0; min_values=0</code></pre>
 <pre><code>## [1] &quot;Running duration of bursts distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=18; bins_in_sec=5;per_well=0; duration=61.7508; feature=&#39;duration&#39;; filter_values_by_min=0; min_values=0
+## Arguments: min_vals=15; xlimit=18; bins_in_sec=5;per_well=0; duration=61.7508; feature='duration'; filter_values_by_min=0; min_values=0
 ## [1] &quot;Running spike density in bursts distribution analysis.&quot;
-## Arguments: min_vals=15; xlimit=300; bins_in_sec=1;per_well=0; duration=61.7508; feature=&#39;spikes_density_in_burst&#39;; filter_values_by_min=0; min_values=0
-</code></pre>
-
-<pre><code class="r"># write burst feature tables for each recording
-write_plate_summary_for_bursts(s,analysis$output_perDIV_dir)
-</code></pre>
-
+## Arguments: min_vals=15; xlimit=300; bins_in_sec=1;per_well=0; duration=61.7508; feature='spikes_density_in_burst'; filter_values_by_min=0; min_values=0</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># write burst feature tables for each recording</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="kw">write_plate_summary_for_bursts</span>(s,analysis<span class="op">$</span>output_perDIV_dir)</a></code></pre></div>
+</section>
+<section id="printing-network-spikes-data" class="level3">
 <h3>printing network spikes data</h3>
-
 <p>The commands below print single recording ns data. Here they are printed for the first of the three recordings</p>
-
-<pre><code class="r">i=1 
-# Get plate name
-basename &lt;- strsplit(basename(s[[i]]$file), &quot;[.]&quot;)[[1]][1]
-
-#Use the next commands for plotting all the ns graphs. Try opening a pdf file so that all will be printed to the same file (which is automatically done for burst features):
-
-pdf(file=paste0(analysis$output_perDIV_dir,&quot;/ns_plot.pdf&quot;))
-xyplot_network_spikes(nspikes)  
-plot_active_wells_network_spikes(nspikes)
-dev.off()
-</code></pre>
-
-<pre><code>## pdf 
-##   2
-</code></pre>
-
-<pre><code class="r"># write network spike data to output file
-write_network_spikes_to_csv(s[[i]],nspikes,analysis$output_perDIV_dir)
-
-# Check the graphs and csvs printed under the analysis$output_perDIV_dir path
-</code></pre>
-
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">i=<span class="dv">1</span> </a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co"># Get plate name</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">basename &lt;-<span class="st"> </span><span class="kw">strsplit</span>(<span class="kw">basename</span>(s[[i]]<span class="op">$</span>file), <span class="st">&quot;[.]&quot;</span>)[[<span class="dv">1</span>]][<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#Use the next commands for plotting all the ns graphs. Try opening a pdf file so that all will be printed to the same file (which is automatically done for burst features):</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="kw">pdf</span>(<span class="dt">file=</span><span class="kw">paste0</span>(analysis<span class="op">$</span>output_perDIV_dir,<span class="st">&quot;/ns_plot.pdf&quot;</span>))</a>
+<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="kw">xyplot_network_spikes</span>(nspikes)  </a>
+<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="kw">plot_active_wells_network_spikes</span>(nspikes)</a>
+<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="kw">dev.off</span>()</a></code></pre></div>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co"># write network spike data to output file</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="kw">write_network_spikes_to_csv</span>(s[[i]],nspikes,analysis<span class="op">$</span>output_perDIV_dir)</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="co"># Check the graphs and csvs printed under the analysis$output_perDIV_dir path</span></a></code></pre></div>
+</section>
+</section>
+<section id="aggregating-recordings" class="level2">
 <h2>Aggregating recordings</h2>
-
-<p>One of the strong advantages of meaRtools is it&#39;s ability to combine the information from all the loaded recordings and use all of it when comparing between treatments. The following commands aggregate the data for spikes, bursts and network spikes. Network burst features were already aggregated automatically when we ran nb_matrix_to_feature_dfs.</p>
-
-<pre><code class="r">spike_features = aggregate_features(s, &quot;spike&quot;,parameters)
-ns_features = aggregate_features(s, &quot;ns&quot;,parameters)
-burst_features = aggregate_features(s, &quot;burst&quot;,parameters)
-
-# printing spike features nae
-spike_features$nae
-</code></pre>
-
-<pre><code>##    well treatment div1 div3 div4
-## 1    B2    treatX   14   13   13
-## 2    B3    treatX   16   16   15
-## 3    B4 untreated   14   13   12
-## 4    B5 untreated   10 &lt;NA&gt;   10
-## 5    B6    treatY   11   12   12
-## 6    B7    treatY   12   12   12
-## 7    C2    treatX   14   13   14
-## 8    C3    treatX   13   13   13
-## 9    C6    treatY   10   12   10
-## 10   C7    treatY   12   13   13
-## 11   D2    treatX   15   14   13
-## 12   D3    treatX   16   15   15
-## 13   D5 untreated &lt;NA&gt;   14 &lt;NA&gt;
-## 14   D6    treatY   12   13   12
-## 15   D7    treatY   13   12   12
-## 16   E2    treatX   16   15   14
-## 17   E3    treatX   16   16   15
-## 18   E4 untreated &lt;NA&gt;   14   15
-## 19   E5 untreated   12   11   12
-## 20   E6    treatY   14   14   13
-## 21   E7    treatY   14   14   14
-</code></pre>
-
-<pre><code class="r">#Feel free to explore the spike/ns/burst and nb_features for the different features they offer
-</code></pre>
-
+<p>One of the strong advantages of meaRtools is it’s ability to combine the information from all the loaded recordings and use all of it when comparing between treatments. The following commands aggregate the data for spikes, bursts and network spikes. Network burst features were already aggregated automatically when we ran nb_matrix_to_feature_dfs.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">spike_features =<span class="st"> </span><span class="kw">aggregate_features</span>(s, <span class="st">&quot;spike&quot;</span>,parameters)</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">ns_features =<span class="st"> </span><span class="kw">aggregate_features</span>(s, <span class="st">&quot;ns&quot;</span>,parameters)</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3">burst_features =<span class="st"> </span><span class="kw">aggregate_features</span>(s, <span class="st">&quot;burst&quot;</span>,parameters)</a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co"># printing spike features nae</span></a>
+<a class="sourceLine" id="cb36-6" data-line-number="6">spike_features<span class="op">$</span>nae</a></code></pre></div>
+<pre><code>##    well treatment div3 div4
+## 1    B2    treatX   13   13
+## 2    B3    treatX   16   15
+## 3    B4 untreated   13   12
+## 4    B5 untreated &lt;NA&gt;   10
+## 5    B6    treatY   12   12
+## 6    B7    treatY   12   12
+## 7    C2    treatX   13   14
+## 8    C3    treatX   13   13
+## 9    C6    treatY   12   10
+## 10   C7    treatY   13   13
+## 11   D2    treatX   14   13
+## 12   D3    treatX   15   15
+## 13   D5 untreated   14 &lt;NA&gt;
+## 14   D6    treatY   13   12
+## 15   D7    treatY   12   12
+## 16   E2    treatX   15   14
+## 17   E3    treatX   16   15
+## 18   E4 untreated   14   15
+## 19   E5 untreated   11   12
+## 20   E6    treatY   14   13
+## 21   E7    treatY   14   14</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co">#Feel free to explore the spike/ns/burst and nb_features for the different features they offer</span></a></code></pre></div>
+</section>
+<section id="filtering-inactive-wells" class="level2">
 <h2>Filtering inactive wells</h2>
-
 <p>The next step is optional, it allows the user to discard from the analysis wells that were not active in at least X% of the recordings. This percentage is also a default parameter, currently set to 50%. Thus, any well that is not considered active (at least 4 active electrodes) in at least 2 out of the 3 loaded recordings will be ignored when comparing the treatments throughout the recordings. In this example we perform the filter on spike and NB features.</p>
-
-<pre><code class="r"># All uncalculated aEs were set previously to NA, convert all those to 0 aE before the filter
-nae &lt;- spike_features$nae
-nae[is.na(nae)] &lt;- 0
-
-# filter spike wells
-spike_features = lapply(spike_features, function(x) filter_wells( x, nae, parameters$well_min_rate, parameters$well_max_div_inactive_ratio))
-
-# filter network burst wells
-nb_features &lt;- lapply(nb_features, function(x) filter_wells(x, nae, parameters$well_min_rate, parameters$well_max_div_inactive_ratio ))
-# re-order features by well name
-nb_features &lt;- lapply(nb_features, function(x) x[order(x[,&#39;well&#39;]),])
-
-# printing spike features nae after filter
-spike_features$nae
-</code></pre>
-
-<pre><code>##    well treatment div1 div3 div4
-## 1    B2    treatX   14   13   13
-## 2    B3    treatX   16   16   15
-## 3    B4 untreated   14   13   12
-## 4    B5 untreated   10    0   10
-## 5    B6    treatY   11   12   12
-## 6    B7    treatY   12   12   12
-## 7    C2    treatX   14   13   14
-## 8    C3    treatX   13   13   13
-## 9    C6    treatY   10   12   10
-## 10   C7    treatY   12   13   13
-## 11   D2    treatX   15   14   13
-## 12   D3    treatX   16   15   15
-## 14   D6    treatY   12   13   12
-## 15   D7    treatY   13   12   12
-## 16   E2    treatX   16   15   14
-## 17   E3    treatX   16   16   15
-## 18   E4 untreated    0   14   15
-## 19   E5 untreated   12   11   12
-## 20   E6    treatY   14   14   13
-## 21   E7    treatY   14   14   14
-</code></pre>
-
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># All uncalculated aEs were set previously to NA, convert all those to 0 aE before the filter</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">nae &lt;-<span class="st"> </span>spike_features<span class="op">$</span>nae</a>
+<a class="sourceLine" id="cb39-3" data-line-number="3">nae[<span class="kw">is.na</span>(nae)] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co"># filter spike wells</span></a>
+<a class="sourceLine" id="cb39-6" data-line-number="6">spike_features =<span class="st"> </span><span class="kw">lapply</span>(spike_features, <span class="cf">function</span>(x) <span class="kw">filter_wells</span>( x, nae, parameters<span class="op">$</span>well_min_rate, parameters<span class="op">$</span>well_max_div_inactive_ratio))</a>
+<a class="sourceLine" id="cb39-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb39-8" data-line-number="8"><span class="co"># filter network burst wells</span></a>
+<a class="sourceLine" id="cb39-9" data-line-number="9">nb_features &lt;-<span class="st"> </span><span class="kw">lapply</span>(nb_features, <span class="cf">function</span>(x) <span class="kw">filter_wells</span>(x, nae, parameters<span class="op">$</span>well_min_rate, parameters<span class="op">$</span>well_max_div_inactive_ratio ))</a>
+<a class="sourceLine" id="cb39-10" data-line-number="10"><span class="co"># re-order features by well name</span></a>
+<a class="sourceLine" id="cb39-11" data-line-number="11">nb_features &lt;-<span class="st"> </span><span class="kw">lapply</span>(nb_features, <span class="cf">function</span>(x) x[<span class="kw">order</span>(x[,<span class="st">'well'</span>]),])</a>
+<a class="sourceLine" id="cb39-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb39-13" data-line-number="13"><span class="co"># printing spike features nae after filter</span></a>
+<a class="sourceLine" id="cb39-14" data-line-number="14">spike_features<span class="op">$</span>nae</a></code></pre></div>
+<pre><code>##    well treatment div3 div4
+## 1    B2    treatX   13   13
+## 2    B3    treatX   16   15
+## 3    B4 untreated   13   12
+## 5    B6    treatY   12   12
+## 6    B7    treatY   12   12
+## 7    C2    treatX   13   14
+## 8    C3    treatX   13   13
+## 9    C6    treatY   12   10
+## 10   C7    treatY   13   13
+## 11   D2    treatX   14   13
+## 12   D3    treatX   15   15
+## 14   D6    treatY   13   12
+## 15   D7    treatY   12   12
+## 16   E2    treatX   15   14
+## 17   E3    treatX   16   15
+## 18   E4 untreated   14   15
+## 19   E5 untreated   11   12
+## 20   E6    treatY   14   13
+## 21   E7    treatY   14   14</code></pre>
 <p>After the filter we can observe the spike features dataframe and find that well D5 was dropped from the table because it lacked activity in the first two recordings (compare to spike_features$nae before the filter was applied).</p>
-
+</section>
+<section id="writing-aggregated-tables-to-files" class="level2">
 <h2>Writing aggregated tables to files</h2>
-
 <p>We can now easily print all the aggregated tables of all the extracted features using one command for each attribute, These files are printed into a designated directory by the name of each activity attribute (spikes, bursts, ns, nb) under the output Analysis folder.</p>
-
-<pre><code class="r">#write csvs 
-write_features_to_files(s, spike_features, analysis$output_dir, &quot;spikes&quot;)
-write_features_to_files(s, burst_features, analysis$output_dir, &quot;bursts&quot;)
-write_features_to_files(s, ns_features, analysis$output_dir, &quot;ns&quot;)
-write_features_to_files(s, nb_features, analysis$output_dir, &quot;nb&quot;)
-</code></pre>
-
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co">#write csvs </span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="kw">write_features_to_files</span>(s, spike_features, analysis<span class="op">$</span>output_dir, <span class="st">&quot;spikes&quot;</span>)</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="kw">write_features_to_files</span>(s, burst_features, analysis<span class="op">$</span>output_dir, <span class="st">&quot;bursts&quot;</span>)</a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="kw">write_features_to_files</span>(s, ns_features, analysis<span class="op">$</span>output_dir, <span class="st">&quot;ns&quot;</span>)</a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="kw">write_features_to_files</span>(s, nb_features, analysis<span class="op">$</span>output_dir, <span class="st">&quot;nb&quot;</span>)</a></code></pre></div>
+</section>
+<section id="testing-for-differences-between-treatments" class="level2">
 <h2>Testing for differences between treatments</h2>
-
-<p>The example recordings have three treatments (groups): treatX, treatY and untreated. to perform MW-tests, permutate the data and plot, we first need to decide which treatment we would like to compare to all the others. Here we use &#39;untreated&#39; as that treatment that will be tested against treatX and treatY. However, you can also use the get_wt(s) function and it will open a tcltk window with the treatments available on the plate and will let you choose the one you&#39;re interested in, to use as argument to the testing scheme.</p>
-
-<pre><code class="r">suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, spike_features, &quot;spikes&quot;, analysis$output_dir))
-suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, burst_features, &quot;bursts&quot;, analysis$output_dir))
-suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, ns_features, &quot;ns&quot;, analysis$output_dir))
-suppressMessages(permute_features_and_plot(s, &quot;treatX&quot;, parameters$perm_n, nb_features, &quot;nb&quot;, analysis$output_dir))
-</code></pre>
-
-<p>At this point, we have extracted all features, combined the recordings, tested the differences between the treatments and printed all the results in graphs and tables. The last thing we want to perform is combining the distributions of all three recordings, testing distribution differences between treatments and printing the results. This step is easily done using one function: dist_perm. The function requires a distribution file for each burst feature, which are automatically printed by calc_burst_distributions into the /Analysis/outputPerDIV/distributionFiles folder. Aside from the distribution file, dist_perm also required the number of permutations to perform and the two treatments to be compared. dist_perm returns an objects with the following information: </p>
-
-<ul>
-<li>two  distributions of the feature, one per each treatment, combined for all the recordings, the </li>
-<li>two comulative distributions, as as the above</li>
-<li>p-values for the distribution differences (Earth Mover&#39;s Distance) and comulative distribution differences (Maximum Distance, please see meaRtools manuscript for full details)</li>
-<li>permutation p-values for each distribution</li>
-<li>original maximum distance and EMD value
-The normalized distribution and it&#39;s corrsponding EMD p-value can be extracted from the dist_perm returned object and plotted as follows:</li>
-</ul>
-
-<pre><code class="r">result &lt;- suppressWarnings(dist_perm(paste0(analysis$output_perDIV_dir,&quot;/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv&quot;),1000,&quot;treatX&quot;,&quot;treatY&quot;))
-</code></pre>
-
+<p>The example recordings have three treatments (groups): treatX, treatY and untreated. to perform MW-tests, permutate the data and plot, we first need to decide which treatment we would like to compare to all the others. Here we use ‘untreated’ as that treatment that will be tested against treatX and treatY. However, you can also use the get_wt(s) function and it will open a tcltk window with the treatments available on the plate and will let you choose the one you’re interested in, to use as argument to the testing scheme.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">suppressMessages</span>(<span class="kw">permute_features_and_plot</span>(s, <span class="st">&quot;treatX&quot;</span>, parameters<span class="op">$</span>perm_n, spike_features, <span class="st">&quot;spikes&quot;</span>, analysis<span class="op">$</span>output_dir))</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">suppressMessages</span>(<span class="kw">permute_features_and_plot</span>(s, <span class="st">&quot;treatX&quot;</span>, parameters<span class="op">$</span>perm_n, burst_features, <span class="st">&quot;bursts&quot;</span>, analysis<span class="op">$</span>output_dir))</a>
+<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="kw">suppressMessages</span>(<span class="kw">permute_features_and_plot</span>(s, <span class="st">&quot;treatX&quot;</span>, parameters<span class="op">$</span>perm_n, ns_features, <span class="st">&quot;ns&quot;</span>, analysis<span class="op">$</span>output_dir))</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="kw">suppressMessages</span>(<span class="kw">permute_features_and_plot</span>(s, <span class="st">&quot;treatX&quot;</span>, parameters<span class="op">$</span>perm_n, nb_features, <span class="st">&quot;nb&quot;</span>, analysis<span class="op">$</span>output_dir))</a></code></pre></div>
+<p>At this point, we have extracted all features, combined the recordings, tested the differences between the treatments and printed all the results in graphs and tables. The last thing we want to perform is combining the distributions of two recordings, testing distribution differences between treatments and printing the results. This step is easily done using one function: dist_perm. The function requires a distribution file for each burst feature, which are automatically printed by calc_burst_distributions into the /Analysis/outputPerDIV/distributionFiles folder. Aside from the distribution file, dist_perm also required the number of permutations to perform and the two treatments to be compared. dist_perm returns an objects with the following information: - two distributions of the feature, one per each treatment, combined for all the recordings, the - two comulative distributions, as as the above - p-values for the distribution differences (Earth Mover’s Distance) and comulative distribution differences (Maximum Distance, please see meaRtools manuscript for full details) - permutation p-values for each distribution - original maximum distance and EMD value The normalized distribution and it’s corrsponding EMD p-value can be extracted from the dist_perm returned object and plotted as follows:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw">suppressWarnings</span>(<span class="kw">dist_perm</span>(<span class="kw">paste0</span>(analysis<span class="op">$</span>output_perDIV_dir,<span class="st">&quot;/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_isi_distributions.csv&quot;</span>),<span class="dv">1000</span>,<span class="st">&quot;treatX&quot;</span>,<span class="st">&quot;treatY&quot;</span>))</a></code></pre></div>
 <pre><code>## 100 permutations
 ## 200 permutations
 ## 300 permutations
@@ -745,23 +657,15 @@ The normalized distribution and it&#39;s corrsponding EMD p-value can be extract
 ## 700 permutations
 ## 800 permutations
 ## 900 permutations
-## 1000 permutations
-</code></pre>
-
-<pre><code class="r">plot(result$data_wt_original,col=&quot;blue&quot;,main=basename,type=&quot;l&quot;,lwd=3,xlab=&quot;IBI&quot;)
-points(result$data_ko_original,col=&quot;green&quot;,type=&quot;l&quot;,lwd=3)
-par(mfrow=c(1,1))  
-mtext(side = 1, at = 0, line = 4,
-          text = paste(&quot;P.value EMD after 1000 permutations: &quot;,format((1-result$perm_EMD), digits = 2),sep=&quot;&quot;),col = &quot;black&quot;,cex= 0.9,adj=0)    
-</code></pre>
-
-<p><img src="figure/dist_perm-1.svg" alt="plot of chunk dist_perm"/></p>
-
-<p>And the cumulative distribution with it&#39;s corrsponding MD p-value can be extracted as follows:</p>
-
-<pre><code class="r">suppressWarnings(result &lt;- dist_perm(paste0(analysis$output_perDIV_dir,&quot;/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_ibi_distributions.csv&quot;),1000,&quot;treatX&quot;,&quot;treatY&quot;))
-</code></pre>
-
+## 1000 permutations</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">plot</span>(result<span class="op">$</span>data_wt_original,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">main=</span>basename,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">lwd=</span><span class="dv">3</span>,<span class="dt">xlab=</span><span class="st">&quot;ISI&quot;</span>)</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="kw">points</span>(result<span class="op">$</span>data_ko_original,<span class="dt">col=</span><span class="st">&quot;green&quot;</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">lwd=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))  </a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="kw">mtext</span>(<span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">at =</span> <span class="dv">0</span>, <span class="dt">line =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb45-5" data-line-number="5">          <span class="dt">text =</span> <span class="kw">paste</span>(<span class="st">&quot;P.value EMD after 1000 permutations: &quot;</span>,<span class="kw">format</span>((<span class="dv">1</span><span class="op">-</span>result<span class="op">$</span>perm_EMD), <span class="dt">digits =</span> <span class="dv">2</span>),<span class="dt">sep=</span><span class="st">&quot;&quot;</span>),<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,<span class="dt">cex=</span> <span class="fl">0.9</span>,<span class="dt">adj=</span><span class="dv">0</span>)    </a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>And the cumulative distribution with it’s corrsponding MD p-value can be extracted as follows:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">suppressWarnings</span>(result &lt;-<span class="st"> </span><span class="kw">dist_perm</span>(<span class="kw">paste0</span>(analysis<span class="op">$</span>output_perDIV_dir,<span class="st">&quot;/distributionFiles/exampleRecording_1012016_plate1_DATE_TIME_isi_distributions.csv&quot;</span>),<span class="dv">1000</span>,<span class="st">&quot;treatX&quot;</span>,<span class="st">&quot;treatY&quot;</span>))</a></code></pre></div>
 <pre><code>## 100 permutations
 ## 200 permutations
 ## 300 permutations
@@ -771,24 +675,29 @@ mtext(side = 1, at = 0, line = 4,
 ## 700 permutations
 ## 800 permutations
 ## 900 permutations
-## 1000 permutations
-</code></pre>
-
-<pre><code class="r">plot(result$data_wt,col=&quot;blue&quot;,main=basename,type=&quot;l&quot;,lwd=3,xlab=&quot;IBI&quot;)
-points(result$data_ko,col=&quot;green&quot;,type=&quot;l&quot;,lwd=3)
-par(mfrow=c(1,1))  
-mtext(side = 1, at = 0, line = 4,
-      text = paste(&quot;P.value Max distance after 1000 permutations: &quot;,format((1-result$perm_p), digits = 3),sep=&quot;&quot;),col = &quot;black&quot;,cex= 0.9,adj=0)    
-</code></pre>
-
-<p><img src="figure/dist_perm2-1.svg" alt="plot of chunk dist_perm2"/></p>
-
-<p>This document provides the steps to use meaRtools&#39;s functions as a pipeline for an MEA experiment analysis lasting 3 DIVs. In the /Analysis output folder are now the full results for extracting all the features and comparing them between the treatments that we decided to test. Even with only three recordings the output files are numerous require a deep dive for better understanding the full picture of the difference between treatments. We hope you will enjoy all the capabilities that meaRtools has to offer and use it to deeply and fully understand your MEA recordings. Please read the meaRtools manuscript for detailed information about the methods and do not hesitate to contact us for any explanation that might be lacking in this document.</p>
-
+## 1000 permutations</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">plot</span>(result<span class="op">$</span>data_wt,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">main=</span>basename,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">lwd=</span><span class="dv">3</span>,<span class="dt">xlab=</span><span class="st">&quot;ISI&quot;</span>)</a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="kw">points</span>(result<span class="op">$</span>data_ko,<span class="dt">col=</span><span class="st">&quot;green&quot;</span>,<span class="dt">type=</span><span class="st">&quot;l&quot;</span>,<span class="dt">lwd=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))  </a>
+<a class="sourceLine" id="cb48-4" data-line-number="4"><span class="kw">mtext</span>(<span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">at =</span> <span class="dv">0</span>, <span class="dt">line =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb48-5" data-line-number="5">      <span class="dt">text =</span> <span class="kw">paste</span>(<span class="st">&quot;P.value Max distance after 1000 permutations: &quot;</span>,<span class="kw">format</span>((<span class="dv">1</span><span class="op">-</span>result<span class="op">$</span>perm_p), <span class="dt">digits =</span> <span class="dv">3</span>),<span class="dt">sep=</span><span class="st">&quot;&quot;</span>),<span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,<span class="dt">cex=</span> <span class="fl">0.9</span>,<span class="dt">adj=</span><span class="dv">0</span>)    </a></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAYAAAAUg66AAAAEGWlDQ1BrQ0dDb2xvclNwYWNlR2VuZXJpY1JHQgAAOI2NVV1oHFUUPrtzZyMkzlNsNIV0qD8NJQ2TVjShtLp/3d02bpZJNtoi6GT27s6Yyc44M7v9oU9FUHwx6psUxL+3gCAo9Q/bPrQvlQol2tQgKD60+INQ6Ium65k7M5lpurHeZe58853vnnvuuWfvBei5qliWkRQBFpquLRcy4nOHj4g9K5CEh6AXBqFXUR0rXalMAjZPC3e1W99Dwntf2dXd/p+tt0YdFSBxH2Kz5qgLiI8B8KdVy3YBevqRHz/qWh72Yui3MUDEL3q44WPXw3M+fo1pZuQs4tOIBVVTaoiXEI/MxfhGDPsxsNZfoE1q66ro5aJim3XdoLFw72H+n23BaIXzbcOnz5mfPoTvYVz7KzUl5+FRxEuqkp9G/Ajia219thzg25abkRE/BpDc3pqvphHvRFys2weqvp+krbWKIX7nhDbzLOItiM8358pTwdirqpPFnMF2xLc1WvLyOwTAibpbmvHHcvttU57y5+XqNZrLe3lE/Pq8eUj2fXKfOe3pfOjzhJYtB/yll5SDFcSDiH+hRkH25+L+sdxKEAMZahrlSX8ukqMOWy/jXW2m6M9LDBc31B9LFuv6gVKg/0Szi3KAr1kGq1GMjU/aLbnq6/lRxc4XfJ98hTargX++DbMJBSiYMIe9Ck1YAxFkKEAG3xbYaKmDDgYyFK0UGYpfoWYXG+fAPPI6tJnNwb7ClP7IyF+D+bjOtCpkhz6CFrIa/I6sFtNl8auFXGMTP34sNwI/JhkgEtmDz14ySfaRcTIBInmKPE32kxyyE2Tv+thKbEVePDfW/byMM1Kmm0XdObS7oGD/MypMXFPXrCwOtoYjyyn7BV29/MZfsVzpLDdRtuIZnbpXzvlf+ev8MvYr/Gqk4H/kV/G3csdazLuyTMPsbFhzd1UabQbjFvDRmcWJxR3zcfHkVw9GfpbJmeev9F08WW8uDkaslwX6avlWGU6NRKz0g/SHtCy9J30o/ca9zX3Kfc19zn3BXQKRO8ud477hLnAfc1/G9mrzGlrfexZ5GLdn6ZZrrEohI2wVHhZywjbhUWEy8icMCGNCUdiBlq3r+xafL549HQ5jH+an+1y+LlYBifuxAvRN/lVVVOlwlCkdVm9NOL5BE4wkQ2SMlDZU97hX86EilU/lUmkQUztTE6mx1EEPh7OmdqBtAvv8HdWpbrJS6tJj3n0CWdM6busNzRV3S9KTYhqvNiqWmuroiKgYhshMjmhTh9ptWhsF7970j/SbMrsPE1suR5z7DMC+P/Hs+y7ijrQAlhyAgccjbhjPygfeBTjzhNqy28EdkUh8C+DU9+z2v/oyeH791OncxHOs5y2AtTc7nb/f73TWPkD/qwBnjX8BoJ98VQNcC+8AAEAASURBVHgB7V0J3E1V11+mjCEylQyFkjJXqAwhMkQpFQ0avEgaKaUSTW/Jq1mDoU8TUkQURakUMo8VmUKmyqyE/a3/ftrHvveee88dz32GtZ7ffc60x//Ze52111577VyKiYQEAUFAEEgDArnTkKdkKQgIAoKARkAYkDQEQUAQSBsCwoDSBr1kLAgIAsKApA0IAoJA2hAQBpQ26CVjQUAQEAYkbUAQEATShoAwoLRBLxkLAoKAMCBpA4KAIJA2BIQBpQ16yVgQEASEAUkbEAQEgbQhIAwobdBLxoKAICAMSNqAICAIpA0BYUBpg14yFgQEAWFA0gYEAUEgbQgIA0ob9JKxICAICAOSNiAICAJpQ0AYUNqgl4wFAUFAGJC0AUFAEEgbAsKA0ga9ZCwICALCgKQNCAKCQNoQEAaUNuglY0FAEBAGJG1AEBAE0oaAMKC0QS8ZCwKCgDAgaQOCgCCQNgSEAaUNeslYEBAEhAFJGxAEBIG0ISAMKG3QS8aCgCAgDEjagCAgCKQNAWFAaYNeMhYEBAFhQNIGBAFBIG0ICANKG/SSsSAgCAgDkjYgCAgCaUMgb9pyDpPx9u3b6brrrtNPb7jhBrr55pvDhHS//eeff1KnTp1CHubKlYsKFixIxYoVo5o1a9J//vMfOumkk0LCZcUbNmY33ngjdevWjex78eDoJw7//PMPde7cmX799Vfq2rUr3XPPPSHZr1+/nl555RVasmQJlSpVipo3b0633nor4b2Go8mTJ9PgwYP149mzZ1PhwoUDgu7bt4+GDx9Oc+fOpV27dtHpp59Ol19+OV155ZUB4czFW2+9RZ9//jlt27aNateuTT179qSqVauaxyFHr/wRYdWqVfTuu+/SggULKH/+/LpevXr1ohNOOCEkvWTfePbZZ+mzzz7TyX7xxReUO3d88gjeTYkSJXTfirmMKpPRhg0bFFdC/x5++OGYS8eNw4lv0nE7csNRP/74Y8zpZ8YINmaPPPKILqJ9Lx4c/aznXXfd5bwzZj4hWTODUNzAnTDmffKHRh07diwkPG5wp1DFixd34uzZsycg3ObNm9Upp5ziPDdp4sgfwICwuOjSpUtIWP6Yqa+//jokLG545Y8w7733nipUqFBIusjLD+IPlZP3kSNHYs5y//79asCAAapAgQJqzZo1McdHBIorVgojJdpxbAbEXzTVu3dv/eOviuIvpipTpowDert27VJYE/+StjEzDGjHjh2Kv+b6x19Y/woTQ05///23euqpp5z3gc7vxoCaNm2qw5x44onqscceU61bt3bifPrppyE5Ll26VLGU64RBusEMqE2bNvo5S1DqiiuuUCwpqWrVqjlx3n//fSfdr776yrnfokULNWjQIIe5XXDBBU44cxJN/iztqXz58ul0WRJXjz76qLrsssv0NUsiavny5Sa5lB0TZUB4F4Zxx82AtmzZolavXq3QcaOhgwcPKsQJJrzgnTt3Bt92vQa3Radx+3rZncnty404+LocOHDANW2bAaFhBdPevXtV0aJFNXAskit0gmDyysMOj7qgPNF8QRBm3bp1UYU1eaChuhEYzO+//64f2ZgZBuQWJ9w9vLutW7eGe6zv8zBJ19PtnUWMGObh999/r6pUqeI0YNOQgxnQokWLnDDo+CAeOqmSJUvq+y1btgzIgYdFKk+ePE4ck67NgNB2eIijw1x00UVOfDAOEx4fK0Ng5LgPiWr37t36ts0458yZY4KqaPJHYCP1gdn88ssvOj7Kde6556qLL75Yvfnmm06aiZxE6mteDAh95aefftJtFv0+mKJhQF59iXElB/RKlSqpmTNnOvl8/PHHCp0UP3DkDh06OFy7cuXKav78+ZoZNWvWTL90fE3OPvtstWzZMieNxYsXO2nw+Fn16NHDYQB4oc8//7wTFid2Z7IZ0F9//aXuvvtuha8gyowXV6tWLfXdd98FxPdiQAhcv359p84204w2D6QBpoMvMY/bdVr4imFI8NFHH+FxAOErjbCm7IiDLylerk2oi8H7k08+cb7Ip512msNsZs2a5XRc4H3++eerGTNmOPUxDGjTpk1OWvi6G0LHQh6NGjXSHx7EB5bAtGLFijotExZHNDx0KojZCIN6ovMNHTrUSd8O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" /><!-- --></p>
+<p>This document provides the steps to use meaRtools’s functions as a pipeline for an MEA experiment analysis lasting two sequential DIVs. In the /Analysis output folder are now the full results for extracting all the features and comparing them between the treatments that we decided to test. Even with only two recordings the output files are numerous require a deep dive for better understanding the full picture of the difference between treatments. We hope you will enjoy all the capabilities that meaRtools has to offer and use it to deeply and fully understand your MEA recordings. Please read the meaRtools manuscript for detailed information about the methods and do not hesitate to contact us for any explanation that might be lacking in this document.</p>
 <p>Goodluck!</p>
-
 <p>meaRtools team</p>
+</section>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 </body>
-
 </html>
